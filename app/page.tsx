@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 
 export default function LandingPage() {
+  const [openIndex, setOpenIndex] = React.useState<number | null>(null)
   const faqData = [
     {
       question: "¿Realmente solo necesito 30 minutos al día?",
@@ -318,9 +319,8 @@ export default function LandingPage() {
 
           <div className="space-y-2">
             {faqData.map((faq, index) => {
-              const [openIndex, setOpenIndex] = React.useState<number | null>(null)
               const isOpen = openIndex === index
-
+              
               return (
                 <Card
                   key={index}
