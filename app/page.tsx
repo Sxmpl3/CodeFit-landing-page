@@ -320,7 +320,7 @@ export default function LandingPage() {
           <div className="space-y-2">
             {faqData.map((faq, index) => {
               const isOpen = openIndex === index
-              
+
               return (
                 <Card
                   key={index}
@@ -329,7 +329,7 @@ export default function LandingPage() {
                   <CardContent className="p-0">
                     <button
                       onClick={() => setOpenIndex(isOpen ? null : index)}
-                      className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-green-500/5 transition-all duration-300"
+                      className="w-full px-6 py-4 text-left flex items-center justify-between transition-all duration-300"
                     >
                       <h3 className="text-lg md:text-xl font-semibold text-white pr-4">{faq.question}</h3>
                       <div
