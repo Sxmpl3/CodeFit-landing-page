@@ -1,15 +1,17 @@
 "use client"
 
-import React from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import React, { useState } from "react"
+import Header from "@/components/general/header"
+import Footer from "@/components/general/footer"
+import NewsletterCard from '@/components/landing/newsletter'
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 
 export default function LandingPage() {
-  const [openIndex, setOpenIndex] = React.useState<number | null>(null)
+  const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const [email, setEmail] = useState('')
+  const [success, setSuccess] = useState(false)
+
   const faqData = [
     {
       question: "¿Realmente solo necesito 30 minutos al día?",
@@ -42,48 +44,22 @@ export default function LandingPage() {
         "El reto básico de 30 días es completamente gratis. Incluye todas las rutinas, tracking básico y acceso a la comunidad. Tenemos planes premium opcionales con características adicionales como nutrición personalizada y coaching 1:1.",
     },
   ]
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index)
+  }
+
+  const handleSubscribe = () => {
+    if (!email) return
+    // Aquí podrías agregar la lógica de suscripción real
+    setSuccess(true)
+    setEmail('')
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900 text-white overflow-hidden">
       {/* Navigation */}
-      <nav className="relative z-50 flex items-center justify-between px-6 py-6 backdrop-blur-md bg-black/20 border-b border-green-500/20">
-        <div className="flex items-center space-x-3">
-          <div className="relative">
-            <Image
-              src="/logo.png"
-              alt="CodeFit Logo"
-              width={128}
-              height={48}
-            />
-          </div>
-        </div>
-
-        <div className="hidden md:flex items-center space-x-8">
-          <Link
-            href="#about"
-            className="text-gray-300 hover:text-green-400 transition-all duration-300 hover:scale-105"
-          >
-            ¿Qué es CodeFit?
-          </Link>
-          <Link
-            href="#features"
-            className="text-gray-300 hover:text-green-400 transition-all duration-300 hover:scale-105"
-          >
-            Características
-          </Link>
-          <Link href="#faq" className="text-gray-300 hover:text-green-400 transition-all duration-300 hover:scale-105">
-            FAQ
-          </Link>
-        </div>
-
-        <div className="flex items-center space-x-4">
-          <Button
-            variant="outline"
-            className="border-green-500/10 bg-black text text-green-400 hover:bg-green-500/30 hover:text-white transition-all duration-300 hover:scale-105"
-          >
-            Iniciar Sesión
-          </Button>
-        </div>
-      </nav>
+      <Header />
 
       {/* Hero Section */}
       <main className="relative">
@@ -129,41 +105,8 @@ export default function LandingPage() {
               30 minutos al día. Sin gimnasio. Sin excusas. Solo tú y tu determinación.
             </p>
 
-            {/* Newsletter */}
-            <div className="flex flex-col lg:flex-row gap-12 items-center justify-center">
-              <Card className="bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-xl border border-green-500/20 shadow-2xl shadow-green-500/10 max-w-md w-full">
-                <CardContent className="p-8">
-                  <div className="text-center mb-6">
-                    <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mb-4 shadow-lg shadow-green-500/25">
-                      <svg className="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-2">Únete al reto</h3>
-                    <p className="text-gray-400 text-sm">Recibe tu plan personalizado y actualizaciones</p>
-                  </div>
-
-                  <form className="space-y-4">
-                    <Input
-                      type="email"
-                      placeholder="tu@email.com"
-                      className="bg-black/50 border-gray-700 text-white placeholder-gray-500 focus:border-green-500 focus:ring-green-500/20 transition-all duration-300"
-                    />
-                    <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-black font-bold py-3 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-500/25">
-                      Comenzar mi transformación
-                    </Button>
-                  </form>
-
-                  <p className="text-xs text-gray-500 mt-4 text-center">
-                    100% gratis • Sin spam • Cancela cuando quieras
-                  </p>
-                </CardContent>
-              </Card>
-
+            <div className="flex flex-col lg:flex-row gap-12 items-center justify-center">               
+              <NewsletterCard />
               {/* Estadísticas */}
               <div className="grid grid-cols-2 gap-6 lg:gap-8">
                 <div className="text-center">
@@ -185,61 +128,8 @@ export default function LandingPage() {
               </div>
             </div>
           </div>
-        </div>
+        </div>            
       </main>
-
-      {/* ¿Qué es CodeFit? */}
-      <section id="about" className="py-24 px-6 relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-emerald-500/5"></div>
-        <div className="relative max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold mb-8">
-              ¿Qué es{" "}
-              <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                CodeFit
-              </span>
-              ?
-            </h2>
-            <div className="max-w-4xl mx-auto">
-              <p className="text-xl text-gray-300 leading-relaxed mb-8">
-                CodeFit es más que un reto de fitness. Es un{" "}
-                <span className="text-green-400 font-semibold">programa científicamente diseñado</span> para
-                developers y personas sedentarias que quieren mejorar su salud física sin complicaciones.
-              </p>
-              <div className="grid md:grid-cols-2 gap-8 text-left">
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-semibold text-green-400">🎯 Enfoque específico</h3>
-                  <p className="text-gray-400">
-                    Ejercicios adaptados para contrarrestar los efectos de estar sentado todo el día. Fortalecemos
-                    espalda, cuello, y mejoramos la postura.
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-semibold text-green-400">⏰ Tiempo realista</h3>
-                  <p className="text-gray-400">
-                    Solo 30 minutos al día. Sabemos que tu tiempo es valioso, por eso cada minuto cuenta con ejercicios
-                    de alta efectividad.
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-semibold text-green-400">🏠 Sin barreras</h3>
-                  <p className="text-gray-400">
-                    Cero equipamiento, cero gimnasio, cero excusas. Solo necesitas un espacio de 2x2 metros y ganas de
-                    cambiar.
-                  </p>
-                </div>
-                <div className="space-y-4">
-                  <h3 className="text-2xl font-semibold text-green-400">📱 Tech-friendly</h3>
-                  <p className="text-gray-400">
-                    App intuitiva, tracking automático, y recordatorios inteligentes que se adaptan a tu horario de
-                    trabajo.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Section Características */}
       <section id="features" className="py-24 px-6">
@@ -360,35 +250,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-green-500/20 py-12 px-6 bg-gradient-to-r from-gray-950 to-black">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="flex items-center space-x-4 mb-6 md:mb-0">
-              <div>
-                <span className="text-xl font-bold bg-gradient-to-r from-green-400 to-emerald-300 bg-clip-text text-transparent">
-                  CodeFit
-                </span>
-                <p className="text-xs text-gray-500">Transforma tu cuerpo, mejora tu código</p>
-              </div>
-            </div>
-            <div className="flex space-x-8 text-sm text-gray-400">
-              <Link href="#" className="hover:text-green-400 transition-colors">
-                Términos
-              </Link>
-              <Link href="#" className="hover:text-green-400 transition-colors">
-                Privacidad
-              </Link>
-              <Link href="#" className="hover:text-green-400 transition-colors">
-                Contacto
-              </Link>
-            </div>
-          </div>
-          <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
-            <p>© 2025 CodeFit. Todos los derechos reservados.</p>
-          </div>
-        </div>
-      </footer>
+       {/* Footer */}
+      <Footer />
 
       <style jsx>{`
         @keyframes gradient {
