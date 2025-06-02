@@ -9,8 +9,6 @@ import { Card, CardContent } from "@/components/ui/card"
 
 export default function LandingPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
-  const [email, setEmail] = useState('')
-  const [, setSuccess] = useState(false)
 
   const faqData = [
     {
