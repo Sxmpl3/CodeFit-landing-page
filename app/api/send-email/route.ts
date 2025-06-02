@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server'
 export async function POST(request: Request) {
   try {
     const { to, subject, message } = await request.json()
+    console.log(to, subject, message)
 
     if (!to || !subject || !message) {
       return NextResponse.json({ error: 'Faltan datos requeridos' }, { status: 400 })
@@ -20,19 +21,19 @@ export async function POST(request: Request) {
       },
     })
 
-    await transporter.sendMail({
+  
+    console.log(await transporter.sendMail({
       from: `"CodeFit" <${process.env.SMTP_USER}>`,
       to,
       subject,
       text: message,
-    })
+    }))
 
     return NextResponse.json({ message: 'Correo enviado con éxito' }, { status: 200 })
   } catch (error: any) {
     console.error('Error enviando correo:', error)
-    // Mostrar error real en desarrollo para debugging
-    const errorMessage = process.env.NODE_ENV === 'development' ? error.message || 'Error desconocido' : 'Error interno al enviar correo'
 
+    const errorMessage = process.env.NODE_ENV === 'development' ? error.message || 'Error desconocido' : 'Error interno al enviar correo'
     return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }

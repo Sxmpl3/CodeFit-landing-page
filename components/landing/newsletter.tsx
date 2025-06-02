@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { addEmail } from '@/src/supabase/newsletter'
+import { addEmail, emailExists } from '@/src/supabase/supabase'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -13,34 +13,56 @@ export default function NewsletterCard() {
   const [error, setError] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setSuccess(false)
-    setError('')
+    e.preventDefault();
+    setLoading(true);
+    setSuccess(false);
+    setError('');
 
-    // Insertar email en Supabase
-    const resultEmail = await addEmail(email, setError);
+    try {
+        // Insertar email en Supabase
+        const hash = await addEmail(email, setError);
 
-    if (resultEmail) {
-      alert('¡Correo añadido con éxito!');
-      setEmail('');
-    }
+        if (hash) {
+            setSuccess(true);
+            setEmail('');
+            
+            // Opcional: Enviar correo de bienvenida
+            try {
+              const res = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  to: email,
+                  subject: '¡Bienvenido a la comunidad CodeFit!',
+                  message: `
+Hola,
 
+Gracias por suscribirte a nuestra newsletter en CodeFit. Estamos encantados de que formes parte de nuestra comunidad.
 
-    // Enviar correo usando API route
-    const res = await fetch('/api/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        to: email,
-        subject: 'Gracias por suscribirte',
-        message: '¡Gracias por unirte a nuestra newsletter! Estarás al día con las novedades.'
-      })
-    })
+Recibirás contenido exclusivo, novedades y consejos para mejorar tu experiencia.
 
-    const result = await res.json()
-    if (!res.ok) {
-      throw new Error(result.error || 'Error al enviar el correo')
+Si en cualquier momento deseas darte de baja, puedes hacerlo fácilmente haciendo clic en el siguiente enlace: https://codefit.es/api/unsubscribe?${hash}
+
+¡Nos vemos pronto!
+
+Saludos,  
+El equipo de CodeFit`
+                  })
+                });
+            
+                if (!res.ok) {
+                    const result = await res.json();
+                    throw new Error(result.error || 'Error al enviar el correo');
+                }
+            } catch (emailError) {
+                console.error('Error sending welcome email:', emailError);
+                // No mostramos error al usuario porque el registro fue exitoso
+            }
+        }
+    } catch (error: any) {
+        setError(error.message || 'Error inesperado');
+    } finally {
+        setLoading(false);
     }
   }
 
@@ -65,7 +87,7 @@ export default function NewsletterCard() {
           <Input
             type="email"
             name="email"
-            placeholder="tu@email.com"
+            placeholder="tu@correo.com"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -83,6 +105,12 @@ export default function NewsletterCard() {
         {success && (
           <p className="text-green-400 text-sm mt-4 text-center">
             ¡Te has registrado correctamente!
+          </p>
+        )}
+
+        {error && (
+          <p className="text-red-400 text-sm mt-4 text-center">
+            Este correo electrónico ya está registrado en nuestra newsletter
           </p>
         )}
       </CardContent>
