@@ -30,10 +30,20 @@ export async function POST(request: Request) {
     }))
 
     return NextResponse.json({ message: 'Correo enviado con éxito' }, { status: 200 })
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error enviando correo:', error)
 
-    const errorMessage = process.env.NODE_ENV === 'development' ? error.message || 'Error desconocido' : 'Error interno al enviar correo'
+    // Guardamos el mensaje de error de forma segura
+    let errorMessage = 'Error interno al enviar correo'
+
+    if (process.env.NODE_ENV === 'development') {
+      if (error instanceof Error) {
+        errorMessage = error.message
+      } else if (typeof error === 'string') {
+        errorMessage = error
+      }
+    }
+
     return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }

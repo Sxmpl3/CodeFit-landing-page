@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { addEmail, emailExists } from '@/src/supabase/supabase'
+import { addEmail } from '@/src/supabase/supabase'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -59,8 +59,12 @@ El equipo de CodeFit`
                 // No mostramos error al usuario porque el registro fue exitoso
             }
         }
-    } catch (error: any) {
-        setError(error.message || 'Error inesperado');
+      } catch (error) {
+        if (error instanceof Error) {
+            setError(error.message);
+        } else {
+            setError('Error inesperado');
+        }
     } finally {
         setLoading(false);
     }

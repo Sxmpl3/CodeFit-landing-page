@@ -6,7 +6,7 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 export async function addEmail(email: string, setError?: (msg: string) => void) {
     try {
-        let hash = generateUnsubscribeToken()
+        const hash = generateUnsubscribeToken()
 
         if (!email || !email.includes('@')) {
             setError?.('Introduce un correo válido.');
@@ -20,7 +20,7 @@ export async function addEmail(email: string, setError?: (msg: string) => void) 
             return null;
         }
 
-        const { data, error } = await supabase
+        const { error } = await supabase
         .from('subscribers')
         .insert([
           { email: email, hash_baja: hash }

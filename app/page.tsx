@@ -10,7 +10,7 @@ import { Card, CardContent } from "@/components/ui/card"
 export default function LandingPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
   const [email, setEmail] = useState('')
-  const [success, setSuccess] = useState(false)
+  const [, setSuccess] = useState(false)
 
   const faqData = [
     {
@@ -44,17 +44,6 @@ export default function LandingPage() {
         "El reto básico de 30 días es completamente gratis. Incluye todas las rutinas, tracking básico y acceso a la comunidad. Tenemos planes premium opcionales con características adicionales como nutrición personalizada y coaching 1:1.",
     },
   ]
-
-  const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index)
-  }
-
-  const handleSubscribe = () => {
-    if (!email) return
-    // Aquí podrías agregar la lógica de suscripción real
-    setSuccess(true)
-    setEmail('')
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-black to-gray-900 text-white overflow-hidden">
