@@ -6,8 +6,6 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 export async function addEmail(email: string, setError?: (msg: string) => void) {
     try {
-        const hash = generateUnsubscribeToken()
-
         if (!email || !email.includes('@')) {
             setError?.('Introduce un correo válido.');
             return null;
@@ -22,9 +20,7 @@ export async function addEmail(email: string, setError?: (msg: string) => void) 
 
         const { error } = await supabase
         .from('subscribers')
-        .insert([
-          { email: email, hash_baja: hash }
-        ])
+        .insert([{ email: email }])
         .select();
 
         if (error) {
@@ -34,7 +30,7 @@ export async function addEmail(email: string, setError?: (msg: string) => void) 
         }
 
         setError?.('');
-        return hash;
+        return true
     } catch (generalError) {
         console.error('General error adding email:', generalError);
         setError?.('Ocurrió un error inesperado. Inténtalo de nuevo.');
@@ -72,13 +68,4 @@ export async function deleteSubscription(hash: string): Promise<boolean> {
   
     return Boolean(data);
 }
-  
-function generateUnsubscribeToken(length = 24): string {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-}
-  
+

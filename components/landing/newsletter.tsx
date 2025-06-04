@@ -20,9 +20,9 @@ export default function NewsletterCard() {
 
     try {
         // Insertar email en Supabase
-        const hash = await addEmail(email, setError);
+        const bool = await addEmail(email, setError);
 
-        if (hash) {
+        if (bool) {
             setSuccess(true);
             setEmail('');
             
@@ -41,7 +41,7 @@ Gracias por suscribirte a nuestra newsletter en CodeFit. Estamos encantados de q
 
 Recibirás contenido exclusivo, novedades y consejos para mejorar tu experiencia.
 
-Si en cualquier momento deseas darte de baja, puedes hacerlo fácilmente haciendo clic en el siguiente enlace: https://codefit.es/api/unsubscribe?${hash}
+Si en cualquier momento deseas darte de baja, puedes hacerlo fácilmente enviando un correo a info@codefit.es
 
 ¡Nos vemos pronto!
 

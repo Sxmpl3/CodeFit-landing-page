@@ -7,12 +7,14 @@ export default function Header() {
       {/* Logo (izquierda) */}
       <div className="flex items-center">
         <div className="relative">
-          <Image
-            src="/logo.png"
-            alt="CodeFit Logo"
-            width={128}
-            height={48}
-          />
+          <Link href="/">
+            <Image
+              src="/logo.png"
+              alt="CodeFit Logo"
+              width={160}
+              height={90}
+            />
+          </Link>
         </div>
       </div>
 

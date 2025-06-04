@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -20,17 +21,27 @@ export default function Footer() {
 
           {/* Enlaces */}
           <div className="flex flex-wrap justify-center gap-6 sm:gap-8 text-sm text-gray-400">
-            <Link 
-              href="#" 
+            <Link
+              href="/terminos"
               className="hover:text-green-400 transition-colors duration-200"
             >
               Términos
             </Link>
-            <Link 
-              href="#" 
+            <Link
+              href="/privacidad"
               className="hover:text-green-400 transition-colors duration-200"
             >
               Privacidad
+            </Link>
+            {/* Link a Instagram con icono */}
+            <Link
+              href="https://www.instagram.com/codefit.es"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 hover:text-green-400 transition-colors duration-200"
+            >
+              <FaInstagram /> 
+              Instagram
             </Link>
           </div>
         </div>
@@ -41,5 +52,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

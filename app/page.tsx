@@ -59,9 +59,9 @@ export default function LandingPage() {
 
         {/* Floating geometric shapes */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-green-400 rotate-45 animate-bounce delay-300"></div>
-          <div className="absolute top-3/4 right-1/4 w-6 h-6 border-2 border-green-400 rotate-12 animate-spin-slow"></div>
-          <div className="absolute top-1/2 right-1/3 w-3 h-3 bg-emerald-400 rounded-full animate-ping delay-700"></div>
+          <div className="absolute top-[10%] left-[5%] md:top-1/4 md:left-1/4 w-3 md:w-4 h-3 md:h-4 bg-green-400 rotate-45 animate-bounce delay-300"></div>
+          <div className="absolute bottom-[10%] right-[5%] md:top-3/4 md:right-1/4 w-4 md:w-6 h-4 md:h-6 border-2 border-green-400 rotate-12 animate-spin-slow"></div>
+          <div className="absolute top-[20%] right-[10%] md:top-1/2 md:right-1/3 w-2 md:w-3 h-2 md:h-3 bg-emerald-400 rounded-full animate-ping delay-700"></div>
         </div>
 
         <div className="relative max-w-6xl mx-auto px-6 py-24">
@@ -88,11 +88,11 @@ export default function LandingPage() {
               El primer reto de fitness diseñado específicamente para{" "}
               <span className="text-green-400 font-semibold">developers</span>
             </p>
-            <p className="text-lg text-gray-400 mb-16 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-400 mb-8 md:mb-16 max-w-2xl mx-auto">
               30 minutos al día. Sin gimnasio. Sin excusas. Solo tú y tu determinación.
             </p>
 
-            <div className="flex flex-col lg:flex-row gap-12 items-center justify-center">               
+            <div className="flex flex-col lg:flex-row gap-6 md:gap-12 items-center justify-center">               
               <NewsletterCard />
               {/* Estadísticas */}
               <div className="grid grid-cols-2 gap-6 lg:gap-8">

@@ -13,8 +13,26 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CodeFit",
-  description: "CodeFit",
+  title: "CodeFit - Entrena y programa tu fitness",
+  description: "CodeFit es la plataforma para desarrolladores y amantes del fitness que quieren mejorar su salud y código.",
+  keywords: ["fitness", "programación", "CodeFit", "entrenamiento", "software fitness"],
+  authors: [{ name: "Izan", url: "https://codefit.es/about" }],
+  openGraph: {
+    title: "CodeFit - Entrena y programa tu fitness",
+    description: "Mejora tu salud con CodeFit.",
+    url: "https://codefit.es",
+    siteName: "CodeFit",
+    images: [
+      {
+        url: "https://codefit.es/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CodeFit",
+      },
+    ],
+    locale: "es_ES",
+    type: "website",
+  }
 };
 
 export default function RootLayout({
