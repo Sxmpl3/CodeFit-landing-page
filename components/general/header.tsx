@@ -11,8 +11,8 @@ export default function Header() {
             <Image
               src="/logo.png"
               alt="CodeFit Logo"
-              width={160}
-              height={90}
+              width={100}
+              height={100}
             />
           </Link>
         </div>
